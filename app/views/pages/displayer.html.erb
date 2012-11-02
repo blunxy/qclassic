@@ -1,0 +1,22 @@
+<script>
+  $(document).ready(function() {
+  var enqueue_socket = io.connect('http://localhost:3001/enq');
+  var dequeue_socket = io.connect('http://localhost:3001/deq');
+
+
+  enqueue_socket.on('message', function(data) {
+  $('ol').append('<li id="game_' + data.id + '">' + data.id + '</li>');
+  });
+
+  dequeue_socket.on('message', function(data) {
+  $('ol li:first').remove();
+  });
+
+
+  });
+</script>
+
+
+<ol>
+
+</ol>

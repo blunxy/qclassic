@@ -1,0 +1,28 @@
+<script>
+  $(document).ready(function() {
+  var enqueue_socket = io.connect('http://localhost:3001/enq');
+  var dequeue_socket = io.connect('http://localhost:3001/deq');
+
+
+  $("a#enqueue").click(function(event) {
+  event.preventDefault();
+  enqueue_socket.emit('message', { some: 'data'});
+  });
+
+  $("a#dequeue").click(function(event) {
+  event.preventDefault();
+  dequeue_socket.emit('message', { some: 'data'});
+  });
+
+
+  });
+</script>
+
+<a id="enqueue" href="#">Enqueue!</a>
+<br/>
+<a id="dequeue" href="#">Dequeue!</a>
+
+
+<ol>
+
+</ol>

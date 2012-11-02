@@ -1,0 +1,51 @@
+<script>
+  $(document).ready(function() {
+  var enqueue_socket = io.connect('http://localhost:3001/enq');
+  var dequeue_socket = io.connect('http://localhost:3001/deq');
+  var delete_socket = io.connect('http://localhost:3001/delete');
+
+  $("form#enqueue_form").submit(function(event) {
+  event.preventDefault();
+  game_id = $('input#gid').val();
+  $('ol').append('<li id="game_' + '">' + game_id + '</li>');
+  enqueue_socket.emit('message', { id: game_id});
+  });
+
+  $("form#delete_form").submit(function(event) {
+  event.preventDefault();
+  game_id = $('input#del_gid').val();
+  $('ol li#game_' + game_id).remove();
+  delete_socket.emit('message', { id: game_id});
+  });
+
+
+  $("form#dequeue_form").click(function(event) {
+  event.preventDefault();
+  $('ol li:first').remove();
+  dequeue_socket.emit('message');
+  });
+
+  dequeue_socket.on('message', function(data) {
+
+  });
+
+  });
+</script>
+
+<form id="enqueue_form">
+  <input id="gid" type="text" />
+  <input type="submit" value="Add" />
+</form>
+
+<form id="delete_form">
+  <input id="del_gid" type="text" />
+  <input type="submit" value="Delete" />
+</form>
+
+<form id="dequeue_form">
+  <input type="submit" value="Remove" />
+</form>
+
+<ol>
+
+</ol>
